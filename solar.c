@@ -2,6 +2,8 @@
 #use delay(clock=20000000)
 #use rs232(baud=9600,xmit=PIN_C6,rcv=PIN_C7)
 
+void clockwise();
+void anticlockwise();
 float fn_ldr1();
 float fn_ldr2();
 float val_ldr1,val_ldr2=0;//variables for storing values of ldr1 and ldr2..
@@ -18,10 +20,22 @@ void main()
 	{
 		
 		x=fn_ldr1();//Intializing LDR function
-		printf("Ldr1 val is %f \n",x);
+		//printf("Ldr1 val is %f \n",x);
 		y=fn_ldr2();
-		printf("Ldr2 val is %f \n",y);
 		delay_ms(1000);
+		//printf("Ldr2 val is %f \n",y);
+		//delay_ms(1000);
+		if(x>y)
+		{
+		
+			clockwise();
+			printf("x %f :\n",x);
+			printf("y %f :\n",y);
+		}	
+		else
+		{
+			anticlockwise();
+		}	
 
 	}
 }
@@ -40,3 +54,59 @@ float fn_ldr2()//Function for reading light
 		val_ldr2=read_adc();
 		return val_ldr2;
 	}
+void clockwise()
+	{
+		output_high(pin_C2);
+		output_low(pin_C3);
+		output_low(pin_D0);
+		output_low(pin_D2);
+		delay_ms(1000);
+		
+		output_low(pin_C2);
+		output_high(pin_C3);
+		output_low(pin_D0);
+		output_low(pin_D2);
+		delay_ms(1000);
+		
+		output_low(pin_C2);
+		output_low(pin_C3);
+		output_high(pin_D0);
+		output_low(pin_D2);
+		delay_ms(1000);
+		
+		output_low(pin_C2);
+		output_low(pin_C3);
+		output_low(pin_D0);
+		output_high(pin_D2);
+		delay_ms(1000);
+		
+		
+	}	
+	
+	void anticlockwise()
+	{
+		output_low(pin_C2);
+		output_low(pin_C3);
+		output_low(pin_D0);
+		output_high(pin_D2);
+		delay_ms(1000);
+
+		output_low(pin_C2);
+		output_low(pin_C3);
+		output_high(pin_D0);
+		output_low(pin_D2);
+		delay_ms(1000);
+
+		output_low(pin_C2);
+		output_high(pin_C3);
+		output_low(pin_D0);
+		output_low(pin_D2);
+		delay_ms(1000);
+
+		output_high(pin_C2);
+		output_low(pin_C3);
+		output_low(pin_D0);
+		output_low(pin_D2);
+		delay_ms(1000);	
+
+	}	
